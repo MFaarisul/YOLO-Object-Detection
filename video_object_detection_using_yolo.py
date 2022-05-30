@@ -3,6 +3,8 @@ import numpy as np
 import argparse
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-v", "--video", required=True,
+	help="path of the video")
 parser.add_argument("-c", "--confidence", type=float, default=0.5,
 	help="minimum probability to filter weak detections")
 args = vars(parser.parse_args())
@@ -16,7 +18,7 @@ net = cv2.dnn.readNet('Data//yolov3.weights', 'Data//yolov3.cfg')
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i-1] for i in net.getUnconnectedOutLayers()]
 
-cap = cv2.VideoCapture(0) # Webcam or Video_path
+cap = cv2.VideoCapture(args['video']) # Webcam or Video_path
 
 # Set color for bounding boxes
 colors = np.random.uniform(0, 255, (len(labels), 3))
